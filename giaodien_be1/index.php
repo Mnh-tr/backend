@@ -83,12 +83,12 @@
                             <!-- Sale badge-->
                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
                             <!-- Product image-->
-                            <a href="item.php?maSP=<?php echo $item_sp['ma'] ?>"><img class="card-img-top" src="../img/<?php echo $item_sp['image']?>" alt="..." /></a>
+                            <a href="item.php?ma=<?php echo $item_sp->ma; ?>"><img class="card-img-top" src="../img/<?php echo $item_sp->image;?>" alt="..." /></a>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder"><?php echo $item_sp['ten'] ?></h5>
+                                    <h5 class="fw-bolder"><?php echo $item_sp->ten; ?></h5>
                                     <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
                                         <div class="bi-star-fill"></div>
@@ -99,7 +99,7 @@
                                     </div>
                                     <!-- Product price-->
                                     <span class="text-muted text-decoration-line-through">$20.00</span>
-                                    <?php echo $item_sp['gia'] ?>
+                                    <?php echo $item_sp->gia; ?>
                                 </div>
                             </div>
                             <!-- Product actions-->

@@ -4,25 +4,34 @@ require_once 'sanPham.php';
 class SanPhamDB extends db{
     public function getAllSanPham()
     {
-        $sql = self::$connection->prepare('SELECT * FROM tb_sanpham');
-        $sql->execute();
+        $sql = self::$connection->prepare("SELECT * FROM tb_sanpham");
+        $sql->execute(); //return an object
+
         $items = array();
         $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
-        return $items;
-    }
-    public function getSanPhamByMa($ma)
-    {
-        $sql = self::$connection->prepare("SELECT * FROM tb_sanpham WHERE ma = ?");
-        $sql->bind_param('s', $ma);
-        $sql->execute();
-        $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
-        $sanPham = "";
+       
+        $arrSanPham = array();
         foreach($items as $key => $value){
-            $sanPham = new sanPham($value['ma'], $value['ten'], $value['gia'], $value['mota'], $value['madanhmuc'], $value['image']);
+            $arrSanPham[] = new sanPham($value['ma'], $value['ten'], $value['gia'], $value['mota'], $value['madanhmuc'], $value['image']);
         }
 
-        return $sanPham; 
-        
+        return $arrSanPham; //return an array
+    }
+    public function getSanPhamByMaSP($maSP)
+    {
+        $sql = self::$connection->prepare("SELECT * FROM tb_sanpham WHERE ma = ?");
+        $sql->bind_param("s", $maSP);
+        $sql->execute(); //return an object
+
+        $items = array();
+        $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+       
+        $sanpham = "";
+        foreach($items as $key => $value){
+            $sanpham = new sanPham($value['ma'], $value['ten'], $value['gia'], $value['mota'], $value['madanhmuc'], $value['image']);
+        }
+
+        return $sanpham; 
     }
     public function getSanPhamByDanhMuc($ma)
     {
