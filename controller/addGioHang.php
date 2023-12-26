@@ -10,5 +10,5 @@
         }
     }
     echo "Bạn vừa thêm sản phẩm ".$id." vào giỏ hàng";
-    header("location: ../view/trangchu.php");
+    header("location: ../giaodien_be1/index.php");
 ?>

@@ -1,3 +1,22 @@
+<?php
+    session_start();
+    require_once '../model/db.php';
+    include '../model/danhMuc_db.php';
+    include '../model/sanPham_db.php';
+    $danhmucModel = new DanhMuc();
+    $dsDanhMuc = $danhmucModel->getAllDanhMuc();
+    $sanphamModel = new SanPhamDB();
+    $dsGioHang = $sanphamModel->getAllSanPham();
+    if (isset($_SESSION['cart'])) {
+        if (count($_SESSION['cart']) > 0) {
+            $n = count($_SESSION['cart']);
+        } else {
+            $n = 0;
+        }
+    } else {
+        $n = 0;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,7 +56,7 @@
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill"><?php echo $n; ?></span>
                         </button>
                     </form>
                 </div>
@@ -53,7 +72,7 @@
 							<a class="btn btn-outline-dark mt-auto" href="#">Empty Cart</a>
 						</div>
 						<table class="table" cellpadding="10" cellspacing="1" >
-						<tbody>
+						    <tbody>
 							<tr>
 								<th style="text-align:left;">Name</th>
 								<th style="text-align:left;">Code</th>
@@ -62,36 +81,33 @@
 								<th style="text-align:right;" width="10%">Total<br>( in $)</th>
 								<th style="text-align:center;" width="5%">Remove</th>
 							</tr>
-							<tr>
-								<td>EXP Portable Hard Drive</td>
-								<td>USB02</td>
-								<td style="text-align:right;">1</td>
-								<td style="text-align:right;">800.00</td>
-								<td style="text-align:right;">800.00</td>
-								<td style="text-align:center;"><a href="#" class=""><i class="bi bi-trash"></i></a></td>
-							</tr>
+                            <?php 
+                            $tongTien = 0;
+                            if (!empty($_SESSION['cart'])) {
+                                foreach($_SESSION['cart'] as $id=>$soluong){
+                                $dsGioHang = $sanphamModel->getSanPhamByMaSP($id);
+                                
+                            ?>
+                            
                             <tr>
-								<td>FinePix Pro2 3D Camera</td>
-								<td>3DcAM01</td>
+								<td><?php echo $dsGioHang->ten; ?></td>
+								<td><?php echo $dsGioHang->ma; ?></td>
 								<td style="text-align:right;">1</td>
-								<td style="text-align:right;">1500.00</td>
-								<td style="text-align:right;">1,500.00</td>
+								<td style="text-align:right;"><?php echo $dsGioHang->gia; ?></td>
+                                <?php 
+                                    $gia = $dsGioHang->gia;
+                                    $soLuong = 1;
+                                    $tongTien = $soluong * $gia;
+                                ?>
+								<td style="text-align:right;"><?php echo $tongTien; ?></td>
 								<td style="text-align:center;"><a href="#" class=""><i class="bi bi-trash"></i></a></td>
 							</tr>
-                            <tr>
-								<td>Luxury Ultra thin Wrist Watch</td>
-								<td>wristWear03</td>
-								<td style="text-align:right;">2</td>
-								<td style="text-align:right;">300.00</td>
-								<td style="text-align:right;">600.00</td>
-								<td style="text-align:center;"><a href="#" class=""><i class="bi bi-trash"></i></a></td>
-							</tr>                
-							<tr>
-								<td colspan="2" align="right">Total:</td>
-								<td align="right">4</td>
-								<td align="right" colspan="2"><strong>2,900.00</strong></td>
-								<td></td>
-							</tr>
+                            <?php
+                                }
+                            }
+                            ?>
+							
+                            
 						</tbody>
 					</table>
   </div>

@@ -16,6 +16,7 @@
     } else {
         $n = 0;
     }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,11 +54,11 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <form action="cart.php" class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill"><?php echo $n; ?></span>
                         </button>
                     </form>
                 </div>
@@ -104,7 +105,7 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="../controller/addGioHang.php?ma=<?php echo $item_sp->ma; ?>">Add to cart</a></div>
                             </div>
                         </div>
                     </div>
